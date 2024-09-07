@@ -1,0 +1,335 @@
+@import url("./base.css");
+
+/* HEADER START */
+
+header {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--black);
+  padding: 1rem 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: var(--h3);
+  font-weight: 600;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: var(--white);
+}
+
+header svg {
+  width: 25px;
+  fill: var(--white);
+}
+
+/* NAV START */
+
+nav {
+  font-family: var(--heading-font);
+  font-weight: 600;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-flow: wrap;
+  gap: 2rem;
+}
+
+nav li a {
+  text-decoration: none;
+  color: var(--white);
+}
+
+@media (max-width: 750px) {
+  header {
+    justify-content: center;
+  }
+  header h1 {
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  header {
+    justify-content: space-between;
+  }
+  header h1 {
+    flex-basis: auto;
+    margin: 0;
+  }
+  header button {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+    border: 0;
+    background-color: transparent;
+    color: var(--primary-color);
+  }
+  header button:hover {
+    color: var(--secondary-color);
+  }
+  header button::after {
+    content: "\2630";
+  }
+  nav {
+    position: fixed;
+    top: 0;
+    right: 200%;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    transition: right 0s 0.5s opacity 0.5s;
+  }
+  button:focus + nav,
+  button:focus-within + nav {
+    right: 0;
+    opacity: 1;
+    transition:
+      right 0s,
+      opacity 0.5s;
+  }
+  nav ul {
+    display: block;
+    text-align: center;
+    position: relative;
+    top: -50vw;
+    transition: top 0.5s;
+  }
+  button:focus + nav ul,
+  button:focus-within + nav ul {
+    top: 0;
+  }
+  nav a {
+    display: block;
+    padding: 1.5rem;
+  }
+  nav ul::after {
+    content: "\2716";
+    display: block;
+    position: absolute;
+    top: 0.125rem;
+    right: 0.5rem;
+    font-size: 2rem;
+    line-height: 1;
+  }
+}
+
+.gradient {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 41, 243, 1) 0%,
+    rgba(133, 116, 250, 1) 35%,
+    rgba(0, 212, 255, 1) 64%,
+    rgba(123, 249, 232, 1) 83%
+  );
+  height: 2px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+}
+.meta p {
+  margin: 0;
+}
+
+.meta svg {
+  width: 20px;
+  color: var(--primary-color);
+}
+
+#notes-section {
+  background: black url(../images/fem-stars-sky.jpg) no-repeat center center;
+  background-size: cover;
+  color: var(--white);
+  padding: 4rem 1rem;
+}
+
+form {
+  display: block;
+}
+
+.form-wrapper {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.input-title {
+  width: 100%;
+}
+
+.form__button {
+  width: 100%;
+  color: var(--white);
+  background-color: var(--plum);
+  border: none;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  border-radius: 5px;
+}
+
+.form__button:hover {
+  cursor: pointer;
+  background-color: var(--magenta);
+}
+
+/* MAIN START */
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem 0;
+  /* border: 1px solid #ddd; */
+  border-radius: 5px;
+  background-color: var(--white);
+  box-shadow: 1px 1px 6px 0px rgba(180, 180, 180, 0.89);
+}
+
+.edit-mode {
+  box-shadow: 1px 1px 6px 0px rgba(56, 236, 253, 0.89);
+}
+
+@media (min-width: 500px) {
+  .notes-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 0.2fr auto auto;
+    gap: 1rem;
+    margin: 4rem 0;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+  }
+  .card .meta {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  .card h3 {
+    margin: 0;
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+  .card p.paragraph {
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+}
+
+@media (min-width: 700px) {
+  .notes-container {
+    /* display: grid; */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 4rem 0;
+  }
+  .card {
+    margin: 0;
+  }
+}
+@media (min-width: 900px) {
+  .notes-container {
+    /* display: grid; */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 4rem 0;
+  }
+  .card {
+    margin: 0;
+  }
+}
+
+/* FOOTER START */
+
+footer {
+  text-align: center;
+  padding: 4rem 0;
+  background: black url(../images/fem-stars.jpg) no-repeat center center;
+  background-size: cover;
+  color: var(--text-color-secondary);
+}
+
+footer svg {
+  width: 40px;
+  fill: var(--secondary-color);
+}
+
+footer ul {
+  margin: 2rem 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.list {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: -70px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  min-width: 100px;
+  z-index: 1;
+}
+
+.dropdown-content button {
+  display: inline-block;
+  width: 100%;
+  border: none;
+  background-color: var(--white);
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content button:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.list:hover .dropdown-content {
+  display: block;
+}
+
+#filter {
+  margin: 2rem 0;
+}
+
+.filter-notes {
+  display: block;
+}
+
+.filter-notes input {
+  width: 100%;
+  /* outline: none; */
+  border: none;
+  box-shadow: 1px 1px 6px 0px rgba(180, 180, 180, 0.89);
+}
