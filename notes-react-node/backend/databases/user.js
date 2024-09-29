@@ -9,7 +9,7 @@ export const getUserById = async (id) => {
   const { rows } = await pool.query(`SELECT * FROM users WHERE user_id = $1`, [
     id,
   ]);
-  return rows;
+  return rows[0];
 };
 
 export const getUserByUsername = async (username) => {
@@ -24,7 +24,7 @@ export const createUser = async (username, email, password) => {
     `INSERT INTO users (username, email, password) VALUES($1, $2, $3) RETURNING *`,
     [username, email, password],
   );
-  return newUser.rows;
+  return newUser.rows[0];
 };
 
 export const updateUser = async (id, username, email, password) => {
@@ -32,12 +32,12 @@ export const updateUser = async (id, username, email, password) => {
     `UPDATE users SET username = $1, email = $2, password = $3 WHERE user_id = $4 RETURNING *`,
     [username, email, password, id],
   );
-  return updatedUser;
+  return updatedUser[0];
 };
 
 export const deleteUser = async (id) => {
   const deletedUser = await pool.query(`DELETE FROM users WHERE user_id = $1`, [
     id,
   ]);
-  return deletedUser;
+  return deletedUser.rowCount;
 };

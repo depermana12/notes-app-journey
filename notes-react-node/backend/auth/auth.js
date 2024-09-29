@@ -4,7 +4,7 @@ import bycrypt from "bcrypt";
 export const createJWT = (user) => {
   // TODO add expiresIn maybe?
   const token = jwt.sign(
-    // the id schema in db is user_id because i want to try natural join, it should be just id
+    // the id in schema is user_id because i want to try natural join, it should be just id
     { id: user.user_id, username: user.username },
     process.env.JWT_SECRET,
   );
@@ -15,7 +15,7 @@ export const createJWT = (user) => {
 export const protect = (req, res, next) => {
   const bearer = req.headers.authorization;
 
-  if (!bearer) {
+  if (!bearer || !bearer.startsWith("Bearer ")) {
     res.status(401);
     res.json({ message: "Unauthorized" });
     return;
@@ -32,6 +32,7 @@ export const protect = (req, res, next) => {
   try {
     const userPayload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = userPayload;
+    console.log(req.user);
     next();
   } catch (error) {
     console.error(error);

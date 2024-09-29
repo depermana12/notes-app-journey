@@ -2,21 +2,23 @@ import { Router } from "express";
 import {
   getAllUser,
   getUserById,
+  createUser,
   updateUser,
   deleteUser,
-} from "../controller/userController.js";
-import { protect } from "../modules/auth.js";
-
-import { signIn, signUp } from "../controller/authController.js";
+} from "../controllers/user.js";
+import { protect } from "../auth/auth.js";
+import { signIn } from "../controllers/auth.js";
+import { uploadAvatar } from "../controllers/upload.js";
 
 const router = Router();
 
-router.post("/signup", signUp);
+router.post("/signup", createUser);
 router.post("/signin", signIn);
 
 // protect all routes below this middleware
 router.use(protect);
 router.route("/").get(getAllUser);
 router.route("/:id").get(getUserById).patch(updateUser).delete(deleteUser);
+router.post("/upload", uploadAvatar);
 
 export default router;

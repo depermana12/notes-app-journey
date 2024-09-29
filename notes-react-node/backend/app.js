@@ -2,9 +2,11 @@ import "dotenv/config";
 import path from "node:path";
 import express from "express";
 
-import userRoute from "./routes/userRouter.js";
-import notesRoute from "./routes/notesRouter.js";
-import { protect } from "./modules/auth.js";
+import userRoute from "./routes/user.js";
+import notesRoute from "./routes/note.js";
+import { protect } from "./auth/auth.js";
+import globalErrorHandler from "./middlewares/errorHandler.js";
+import invalidRouteHandler from "./middlewares/notFoundHandler.js";
 
 const app = express();
 
@@ -17,5 +19,9 @@ app.use(express.static(PUBLIC_PATH));
 
 app.use("/api/v1/notes", protect, notesRoute);
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/auth", authRoute);
+
+app.use(invalidRouteHandler);
+app.use(globalErrorHandler);
 
 export default app;
