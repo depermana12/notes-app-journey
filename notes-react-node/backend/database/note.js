@@ -20,6 +20,19 @@ export const getNoteById = async (id) => {
   return rows[0];
 };
 
+export const countNote = async () => {
+  const { rows } = await pool.query(`SELECT COUNT(*) FROM notes`);
+  return rows[0].count;
+};
+
+export const getNoteByPaginated = async (limit, offset) => {
+  const { rows } = await pool.query(`SELECT * FROM notes LIMIT $1 OFFSET $2`, [
+    limit,
+    offset,
+  ]);
+  return rows;
+};
+
 export const createNote = async (title, content, id) => {
   const newNotes = await pool.query(
     `INSERT INTO notes (title, content, user_id) VALUES($1, $2, $3) RETURNING *`,

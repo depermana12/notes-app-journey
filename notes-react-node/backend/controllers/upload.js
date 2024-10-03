@@ -1,25 +1,21 @@
 import upload from "../middlewares/uploadHandler.js";
-import { handleUploadAvatar } from "../services/upload.js";
+import * as uploadService from "../services/upload.js";
+import asyncHandler from "../middlewares/asyncHandler.js";
+import { UploadError } from "../error/customError.js";
 
-export const uploadAvatar = async (req, res) => {
-  upload.single("avatar")(req, res, async (err) => {
-    if (err) {
-      return res.status(400).json({ message: err.message });
-    }
+export const uploadAvatar = asyncHandler(async (req, res) => {
+  const avatar = upload.single("avatar");
 
-    if (!req.file) {
-      return res.status(400).json({ message: "Please upload a file" });
-    }
+  avatar(req, res, async (err) => {
+    if (err) throw new UploadError(err.message);
 
-    try {
-      const result = await handleUploadAvatar(req.file, req.user.id);
-      return res
-        .status(200)
-        .json({ message: "Upload successful", data: result });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: "Server error", error: error.message });
-    }
+    if (!req.file)
+      throw new UploadError("There is no file, please upload again");
+
+    const result = await uploadService.handleUploadAvatar(
+      req.file,
+      req.user.id,
+    );
+    res.status(200).json({ message: "Upload successful", data: result });
   });
-};
+});

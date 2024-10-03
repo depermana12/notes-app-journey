@@ -4,7 +4,8 @@ import express from "express";
 
 import userRoute from "./routes/user.js";
 import notesRoute from "./routes/note.js";
-import { protect } from "./auth/auth.js";
+import authRoute from "./routes/auth.js";
+import { protect } from "./auth/authHandler.js";
 import globalErrorHandler from "./middlewares/errorHandler.js";
 import invalidRouteHandler from "./middlewares/notFoundHandler.js";
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(PUBLIC_PATH));
 
 app.use("/api/v1/notes", protect, notesRoute);
-app.use("/api/v1/users", userRoute);
+app.use("/api/v1/users", protect, userRoute);
 app.use("/api/v1/auth", authRoute);
 
 app.use(invalidRouteHandler);

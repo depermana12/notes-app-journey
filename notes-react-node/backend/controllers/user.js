@@ -1,6 +1,6 @@
 import * as userService from "../services/user.js";
 import { body, validationResult } from "express-validator";
-import { hashPassword, createJWT } from "../auth/auth.js";
+import { hashPassword, createJWT } from "../auth/authUtils.js";
 import { NotFoundError, ConflictError } from "../error/customError.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 

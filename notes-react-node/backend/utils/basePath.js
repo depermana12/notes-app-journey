@@ -6,4 +6,6 @@ const basePathTo = (pathTo) => {
   return BASE_PATH;
 };
 
+console.log(process.cwd());
+
 export default basePathTo;
